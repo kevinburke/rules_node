@@ -37,7 +37,7 @@ def _get_node_modules_dir_from_package_json(file):
 def mocha_test_impl(ctx):
     inputs = []
     srcs = []
-    script = ctx.file.main
+    script = ctx.files.main
     node = ctx.file._node
     mocha = ctx.file.mocha
     node_paths = []
@@ -67,7 +67,7 @@ def mocha_test_impl(ctx):
             node_paths = ":".join(node_paths),
             node = node.short_path,
             node_bin_path = node.dirname,
-            script_path = script.short_path,
+            script_path = " ".join(script),
             mocha = mocha.path,
             mocha_args = " ".join(ctx.attr.mocha_args),
         ),
@@ -75,7 +75,7 @@ def mocha_test_impl(ctx):
 
     #print("node_paths %s" % "\n".join(node_paths))
 
-    runfiles = [node, script, mocha] + inputs + srcs
+    runfiles = [node, mocha] + inputs + srcs
 
     return struct(
         runfiles = ctx.runfiles(

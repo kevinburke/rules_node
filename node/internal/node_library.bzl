@@ -4,7 +4,7 @@ _modules_filetype = FileType(["node_modules"])
 def _get_node_modules_dir(file, include_node_modules = True):
     filename = str(file)
     parts = filename.split("]")
-    prefix = parts[0][len("Artifact:[["):]
+    prefix = parts[0][len("File:[["):]
     middle = parts[1]
     suffix = parts[2].split("/")
     components = [prefix, middle] + suffix[0:-1]
@@ -28,7 +28,7 @@ def _copy_to_namespace(base, file):
     steps = []
     src = file.path
     dst = file.basename
-    short_parts = file.short_path.split('/')
+    short_parts = file.path.split('/')
     if short_parts:
         dst_dir = "/".join(short_parts[0:-1])
         dst = dst_dir + "/" + dst
@@ -72,7 +72,7 @@ def node_library_impl(ctx):
         output = package_json_file,
         substitutions = {
             "%{name}": lib_name,
-            "%{main}": script.short_path if script else "",
+            "%{main}": script.path if script else "",
             "%{version}": ctx.attr.version,
             "%{description}": ctx.attr.d,
         },
@@ -96,8 +96,7 @@ def node_library_impl(ctx):
         node.path,
         npm.path,
         "install",
-        #"--verbose",
-        "--global", # remember you need --global + --prefix
+        "--verbose",
         "--prefix",
         npm_prefix,
     ]
