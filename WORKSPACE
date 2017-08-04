@@ -23,7 +23,7 @@ npm_repository(
 npm_repository(
     name = "npm_mocha",
     deps = {
-        "mocha": "3.1.0",
+        "mocha": "3.5.0",
     },
     #sha256 = "9b48987065bb42003bab81b4538afa9ac194d217d8e2e770a5cba782249f7dc8",
 )

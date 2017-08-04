@@ -88,8 +88,7 @@ mocha_test = rule(
     mocha_test_impl,
     attrs = {
         "main": attr.label(
-            single_file = True,
-            allow_files = True,
+            allow_single_file = False,
             #allow_files = _js_filetype,
         ),
         "data": attr.label_list(
