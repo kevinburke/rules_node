@@ -87,9 +87,9 @@ def mocha_test_impl(ctx):
 mocha_test = rule(
     mocha_test_impl,
     attrs = {
-        "main": attr.label(
-            allow_single_file = False,
-            #allow_files = _js_filetype,
+        "main": attr.label_list(
+            doc="List of mocha files to run",
+            allow_files = True,
         ),
         "data": attr.label_list(
             allow_files = True,
